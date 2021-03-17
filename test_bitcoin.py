@@ -4,6 +4,7 @@ from unittest.mock import patch
 
 import bitcoin
 
+
 class TestBitCoin(TestCase):
 
     @patch('bitcoin.request_rates')
@@ -17,14 +18,15 @@ class TestBitCoin(TestCase):
             "GBP":{"code":"GBP","symbol":"&pound;","rate":"13,532.0990","description":"British Pound Sterling","rate_float":13532.099},
             "EUR":{"code":"EUR","symbol":"&euro;","rate":"15,121.6075","description":"Euro","rate_float":15121.6075}}}
 
-
         expected_dollars = 1796278.05
         dollars = bitcoin.convert_btc_to_dollars(100, 'USD')
         self.assertEqual(expected_dollars, dollars)
 
+    @patch('builtins.print')
+    def test_display_result(self, mock_print):
 
-
-
+        bitcoin.display_result(100.00000000, 1796278.05)
+        mock_print.assert_called_once_with('100.00000000 BTC is equivalent to $1796278.05.')
 
 
 if __name__ == '__main__':
